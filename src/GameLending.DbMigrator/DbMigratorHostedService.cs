@@ -1,9 +1,9 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using GameLending.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GameLending.Data;
 using Serilog;
+using System.Threading;
+using System.Threading.Tasks;
 using Volo.Abp;
 
 namespace GameLending.DbMigrator
@@ -19,23 +19,21 @@ namespace GameLending.DbMigrator
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            using (var application = AbpApplicationFactory.Create<GameLendingDbMigratorModule>(options =>
+            using var application = AbpApplicationFactory.Create<GameLendingDbMigratorModule>(options =>
             {
                 options.UseAutofac();
                 options.Services.AddLogging(c => c.AddSerilog());
-            }))
-            {
-                application.Initialize();
+            });
+            application.Initialize();
 
-                await application
-                    .ServiceProvider
-                    .GetRequiredService<GameLendingDbMigrationService>()
-                    .MigrateAsync();
+            await application
+                .ServiceProvider
+                .GetRequiredService<GameLendingDbMigrationService>()
+                .MigrateAsync();
 
-                application.Shutdown();
+            application.Shutdown();
 
-                _hostApplicationLifetime.StopApplication();
-            }
+            _hostApplicationLifetime.StopApplication();
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

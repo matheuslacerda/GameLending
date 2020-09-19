@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using GameLending.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using GameLending.Data;
+using System;
+using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
 namespace GameLending.EntityFrameworkCore

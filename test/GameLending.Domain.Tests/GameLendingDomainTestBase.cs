@@ -1,6 +1,6 @@
 ﻿namespace GameLending
 {
-    public abstract class GameLendingDomainTestBase : GameLendingTestBase<GameLendingDomainTestModule> 
+    public abstract class GameLendingDomainTestBase : GameLendingTestBase<GameLendingDomainTestModule>
     {
 
     }

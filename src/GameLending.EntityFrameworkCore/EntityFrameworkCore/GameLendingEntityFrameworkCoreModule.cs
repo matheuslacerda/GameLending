@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -32,8 +33,11 @@ namespace GameLending.EntityFrameworkCore
             GameLendingEfCoreEntityExtensionMappings.Configure();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            Check.NotNull(context, nameof(context));
+
             context.Services.AddAbpDbContext<GameLendingDbContext>(options =>
             {
                 /* Remove "includeAllEntities: true" to create

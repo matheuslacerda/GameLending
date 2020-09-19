@@ -31,8 +31,11 @@ namespace GameLending
             });
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            Check.NotNull(context, nameof(context));
+
             Configure<AbpBackgroundJobOptions>(options =>
             {
                 options.IsJobExecutionEnabled = false;
@@ -50,12 +53,10 @@ namespace GameLending
         {
             AsyncHelper.RunSync(async () =>
             {
-                using (var scope = context.ServiceProvider.CreateScope())
-                {
-                    await scope.ServiceProvider
-                        .GetRequiredService<IDataSeeder>()
-                        .SeedAsync();
-                }
+                using var scope = context.ServiceProvider.CreateScope();
+                await scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>()
+                    .SeedAsync();
             });
         }
     }

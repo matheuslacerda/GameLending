@@ -9,6 +9,6 @@ namespace GameLending.HttpApi.Client.ConsoleTestApp
         )]
     public class GameLendingConsoleApiClientModule : AbpModule
     {
-        
+
     }
 }

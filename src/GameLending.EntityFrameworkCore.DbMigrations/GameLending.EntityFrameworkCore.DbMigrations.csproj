@@ -7,11 +7,36 @@
     <RootNamespace>GameLending</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CS1591;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200915143847_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915143847_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915150516_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915150516_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915153241_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915153241_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915175623_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915175623_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915180024_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915180024_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915180809_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915180809_Add-Amigo-Jogo.Designer.cs" />
+    <Compile Remove="Migrations\20200915181306_Add-Amigo-Jogo.cs" />
+    <Compile Remove="Migrations\20200915181306_Add-Amigo-Jogo.Designer.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\GameLending.EntityFrameworkCore\GameLending.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6" />
   </ItemGroup>
 

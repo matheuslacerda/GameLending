@@ -19,7 +19,8 @@ namespace GameLending.Security
         {
             if (_principal == null)
             {
-                lock (this)
+                FakeCurrentPrincipalAccessor fakeCurrentPrincipalAccessor = this;
+                lock (fakeCurrentPrincipalAccessor)
                 {
                     if (_principal == null)
                     {

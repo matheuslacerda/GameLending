@@ -1,8 +1,6 @@
-﻿using Volo.Abp;
-
-namespace GameLending.EntityFrameworkCore
+﻿namespace GameLending.EntityFrameworkCore
 {
-    public abstract class GameLendingEntityFrameworkCoreTestBase : GameLendingTestBase<GameLendingEntityFrameworkCoreTestModule> 
+    public abstract class GameLendingEntityFrameworkCoreTestBase : GameLendingTestBase<GameLendingEntityFrameworkCoreTestModule>
     {
 
     }

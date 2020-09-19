@@ -57,7 +57,7 @@ namespace GameLending.Users
 
         private AppUser()
         {
-            
+
         }
     }
 }

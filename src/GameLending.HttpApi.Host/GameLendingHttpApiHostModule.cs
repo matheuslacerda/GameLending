@@ -1,6 +1,5 @@
-using System;
-using System.IO;
-using System.Linq;
+using GameLending.EntityFrameworkCore;
+using GameLending.MultiTenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.DataProtection;
@@ -8,10 +7,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GameLending.EntityFrameworkCore;
-using GameLending.MultiTenancy;
-using StackExchange.Redis;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using System;
+using System.IO;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy;
@@ -39,22 +39,25 @@ namespace GameLending
     {
         private const string DefaultCorsPolicyName = "Default";
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            Check.NotNull(context, nameof(context));
+
             var configuration = context.Services.GetConfiguration();
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
             ConfigureConventionalControllers();
             ConfigureAuthentication(context, configuration);
             ConfigureLocalization();
-            ConfigureCache(configuration);
+            ConfigureCache();
             ConfigureVirtualFileSystem(context);
             ConfigureRedis(context, configuration, hostingEnvironment);
             ConfigureCors(context, configuration);
             ConfigureSwaggerServices(context);
         }
 
-        private void ConfigureCache(IConfiguration configuration)
+        private void ConfigureCache()
         {
             Configure<AbpDistributedCacheOptions>(options =>
             {
@@ -86,7 +89,7 @@ namespace GameLending
             });
         }
 
-        private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
+        private static void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
         {
             context.Services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
@@ -102,7 +105,7 @@ namespace GameLending
             context.Services.AddSwaggerGen(
                 options =>
                 {
-                    options.SwaggerDoc("v1", new OpenApiInfo {Title = "GameLending API", Version = "v1"});
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "GameLending API", Version = "v1" });
                     options.DocInclusionPredicate((docName, description) => true);
                 });
         }
@@ -122,7 +125,7 @@ namespace GameLending
             });
         }
 
-        private void ConfigureRedis(
+        private static void ConfigureRedis(
             ServiceConfigurationContext context,
             IConfiguration configuration,
             IWebHostEnvironment hostingEnvironment)
@@ -136,7 +139,7 @@ namespace GameLending
             }
         }
 
-        private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
+        private static void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
         {
             context.Services.AddCors(options =>
             {

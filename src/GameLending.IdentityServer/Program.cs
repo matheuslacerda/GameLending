@@ -1,13 +1,14 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
+using System;
 
 namespace GameLending
 {
-    public class Program
+    public static class Program
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "As intended")]
         public static int Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()

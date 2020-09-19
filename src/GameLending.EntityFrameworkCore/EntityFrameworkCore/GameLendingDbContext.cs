@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameLending.Amigos;
+using GameLending.Jogos;
 using GameLending.Users;
+using Microsoft.EntityFrameworkCore;
+using Volo.Abp;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
@@ -22,6 +25,9 @@ namespace GameLending.EntityFrameworkCore
     {
         public DbSet<AppUser> Users { get; set; }
 
+        public DbSet<Jogo> Jogos { get; set; }
+        public DbSet<Amigo> Amigos { get; set; }
+
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside GameLendingDbContextModelCreatingExtensions.ConfigureGameLending
          */
@@ -32,8 +38,11 @@ namespace GameLending.EntityFrameworkCore
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            Check.NotNull(builder, nameof(builder));
+
             base.OnModelCreating(builder);
 
             /* Configure the shared tables (with included modules) here */
@@ -41,7 +50,7 @@ namespace GameLending.EntityFrameworkCore
             builder.Entity<AppUser>(b =>
             {
                 b.ToTable(AbpIdentityDbProperties.DbTablePrefix + "Users"); //Sharing the same table "AbpUsers" with the IdentityUser
-                
+
                 b.ConfigureByConvention();
                 b.ConfigureAbpUser();
 

@@ -1,12 +1,16 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using Volo.Abp;
 
 namespace GameLending.Migrations
 {
     public partial class Initial : Migration
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            Check.NotNull(migrationBuilder, nameof(migrationBuilder));
+
             migrationBuilder.CreateTable(
                 name: "AbpAuditLogs",
                 columns: table => new
@@ -1107,8 +1111,11 @@ namespace GameLending.Migrations
                 columns: new[] { "SubjectId", "ClientId", "Type" });
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            Check.NotNull(migrationBuilder, nameof(migrationBuilder));
+
             migrationBuilder.DropTable(
                 name: "AbpAuditLogActions");
 

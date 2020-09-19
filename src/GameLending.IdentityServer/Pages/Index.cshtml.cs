@@ -4,7 +4,7 @@ namespace GameLending.Pages
 {
     public class IndexModel : AbpPageModel
     {
-        public void OnGet()
+        public static void OnGet()
         {
         }
     }

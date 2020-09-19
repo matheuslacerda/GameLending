@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp;
 using Volo.Abp.Modularity;
-using Volo.Abp.Uow;
 using Volo.Abp.Testing;
+using Volo.Abp.Uow;
 
 namespace GameLending
 {
     /* All test classes are derived from this class, directly or indirectly.
      */
-    public abstract class GameLendingTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule> 
+    public abstract class GameLendingTestBase<TStartupModule> : AbpIntegratedTest<TStartupModule>
         where TStartupModule : IAbpModule
     {
         protected override void SetAbpApplicationCreationOptions(AbpApplicationCreationOptions options)
@@ -23,19 +23,18 @@ namespace GameLending
             return WithUnitOfWorkAsync(new AbpUnitOfWorkOptions(), func);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         protected virtual async Task WithUnitOfWorkAsync(AbpUnitOfWorkOptions options, Func<Task> action)
         {
-            using (var scope = ServiceProvider.CreateScope())
-            {
-                var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+            Check.NotNull(action, nameof(action));
 
-                using (var uow = uowManager.Begin(options))
-                {
-                    await action();
+            using var scope = ServiceProvider.CreateScope();
+            var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
 
-                    await uow.CompleteAsync();
-                }
-            }
+            using var uow = uowManager.Begin(options);
+            await action();
+
+            await uow.CompleteAsync();
         }
 
         protected virtual Task<TResult> WithUnitOfWorkAsync<TResult>(Func<Task<TResult>> func)
@@ -43,19 +42,18 @@ namespace GameLending
             return WithUnitOfWorkAsync(new AbpUnitOfWorkOptions(), func);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "Check.NotNull")]
         protected virtual async Task<TResult> WithUnitOfWorkAsync<TResult>(AbpUnitOfWorkOptions options, Func<Task<TResult>> func)
         {
-            using (var scope = ServiceProvider.CreateScope())
-            {
-                var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+            Check.NotNull(func, nameof(func));
 
-                using (var uow = uowManager.Begin(options))
-                {
-                    var result = await func();
-                    await uow.CompleteAsync();
-                    return result;
-                }
-            }
+            using var scope = ServiceProvider.CreateScope();
+            var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+
+            using var uow = uowManager.Begin(options);
+            var result = await func();
+            await uow.CompleteAsync();
+            return result;
         }
     }
 }

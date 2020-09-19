@@ -20,10 +20,10 @@ namespace GameLending.Samples
         }
 
         [Fact]
-        public async Task Initial_Data_Should_Contain_Admin_User()
+        public async Task InitialDataShouldContainAdminUser()
         {
             //Act
-            var result = await _userAppService.GetListAsync(new GetIdentityUsersInput());
+            var result = await _userAppService.GetListAsync(new GetIdentityUsersInput()).ConfigureAwait(false);
 
             //Assert
             result.TotalCount.ShouldBeGreaterThan(0);

@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using GameLending.Users;
+﻿using GameLending.Users;
+using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using System;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace GameLending.EntityFrameworkCore.Samples
         }
 
         [Fact]
-        public async Task Should_Query_AppUser()
+        public async Task ShouldQueryAppUser()
         {
             /* Need to manually start Unit Of Work because
              * FirstOrDefaultAsync should be executed while db connection / context is available.
