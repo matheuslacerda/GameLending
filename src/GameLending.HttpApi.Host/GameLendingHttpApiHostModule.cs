@@ -69,7 +69,7 @@ namespace GameLending
         {
             var hostingEnvironment = context.Services.GetHostingEnvironment();
 
-            if (hostingEnvironment.IsDevelopment())
+            /*if (hostingEnvironment.IsDevelopment())
             {
                 Configure<AbpVirtualFileSystemOptions>(options =>
                 {
@@ -78,7 +78,7 @@ namespace GameLending
                     options.FileSets.ReplaceEmbeddedByPhysical<GameLendingApplicationContractsModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}GameLending.Application.Contracts"));
                     options.FileSets.ReplaceEmbeddedByPhysical<GameLendingApplicationModule>(Path.Combine(hostingEnvironment.ContentRootPath, $"..{Path.DirectorySeparatorChar}GameLending.Application"));
                 });
-            }
+            }*/
         }
 
         private void ConfigureConventionalControllers()
